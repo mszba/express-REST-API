@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 
 // Getting one sub
 router.get('/:id', getSubscriber, (req, res) => {
-  res.send(req.params.id)
+  res.send(req.subscriber.name)
 })
 
 

@@ -2,7 +2,7 @@ GET http://localhost:3000/subscribers
 
 ###
 
-GET http://localhost:3000/subscribers/12
+GET http://localhost:3000/subscribers/5f2950e2997b2611a0d2c0a2
 
 ###
 
@@ -12,4 +12,17 @@ Content-Type: application/json
 {
   "name": "John Smith",
   "subscribedToChannel": "XYZ Channel"
+}
+
+###
+
+DELETE http://localhost:3000/subscribers/5f25c52f073b1348a4f2772f
+
+###
+
+PATCH http://localhost:3000/subscribers/5f2950e2997b2611a0d2c0a2
+Content-Type: application/json
+
+{
+  "name": "New Name"
 }

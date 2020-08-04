@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const Subscriber = require('../models/subscriber');
-const subscriber = require('../models/subscriber');
 
 
 // Getting all subs
@@ -18,7 +17,7 @@ router.get('/', async (req, res) => {
 
 // Getting one sub
 router.get('/:id', getSubscriber, (req, res) => {
-  res.send(req.subscriber.name)
+  res.json(res.subscriber)
 })
 
 
@@ -39,14 +38,30 @@ router.post('/', async (req, res) => {
 
 
 // Updating one sub
-router.patch('/:id', (req, res) => {
-
+router.patch('/:id', getSubscriber, async (req, res) => {
+  if (req.body.name != null) {
+    res.subscriber.name = req.body.name
+  }
+  if (req.body.subscribedToChannel != null) {
+    res.subscriber.subscribedToChannel = req.body.subscribedToChannel
+  }
+  try {
+    const updatedSubscriber = await res.subscriber.save()
+    res.json(updatedSubscriber)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
 })
 
 
 // Deleting one sub
-router.delete('/:id', (req, res) => {
-  res.subscriber
+router.delete('/:id', getSubscriber, async (req, res) => {
+  try {
+    await res.subscriber.remove()
+    res.json({ message: 'Deleted subscriber' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 })
 
 async function getSubscriber(req, res, next) {
